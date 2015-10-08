@@ -1,11 +1,7 @@
 angular.module('BJA', [])
 .controller('MainController', ['$scope',
 	function($scope) {
-		
 		$scope.showSignUpArea = true;
-		
-		
-		
 	}
 ])
 .controller('SignUpController', ['$scope',
@@ -21,6 +17,7 @@ angular.module('BJA', [])
 			};
 			
 			alert(firstName + ' ' + lastName + '\n' + username + '\n' + email);
+			
 		};
 		
 	}
@@ -60,6 +57,7 @@ angular.module('BJA', [])
 			};
 			
 			alert('Title: ' + title + '\n' + 'Description: ' + description);
+			
 		};
 		
 	}
