@@ -3,10 +3,10 @@
 <html>
 
 	<head>
-		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular.min.js"></script>
+		<script src="lib/angular/angular.min.js"></script>
 	</head>
 
-	<body ng-app="BJA" ng-controller="MainController">
+	<body ng-app="BJA" ng-controller="MainController" ng-cloak="">
 		
 		<div class="col center">
 			<h1>Welcome to Base Jumpers Anonymous</h1>
@@ -14,9 +14,9 @@
 		
 		<div class="col center">
 			<div class="row">
-				<button ng-click="showSignUpArea = true; showListArea = false; showEditArea = false">Sign Up</button>
-				<button ng-click="showSignUpArea = false; showListArea = true; showEditArea = false">View Jumps</button>
-				<button ng-click="showSignUpArea = false; showListArea = false; showEditArea = true">Create Jump</button>
+				<button ng-click="showSignUpArea = true; showListArea = false; showEditArea = false">CREATE USER</button>
+				<button ng-click="showSignUpArea = false; showListArea = true; showEditArea = false">VIEW JUMPS</button>
+				<button ng-click="showSignUpArea = false; showListArea = false; showEditArea = true">CREATE JUMP</button>
 			</div>
 		</div>
 		
@@ -34,13 +34,14 @@
 			<div class="col center">
 				<div class="row">
 					<input type="text" ng-model="username" placeholder="username">
-					<button ng-click="showJumps(username)">SHOW JUMPS</div>
 				</div>
+				<button ng-click="showJumps(username)">SHOW JUMPS</div>
 				
 				<div ng-repeat="jump in jumps" style="margin-top: 20px">
 					<div class="col center">
-						<div style="font-weight: bold">{{jump.title}}</div>
-						<div>{{jump.description}}</div>
+						<div style="font-weight: bold; font-size: 2em">{{jump.title}}</div>
+						<div style="font-size: 2em">{{jump.description}}</div>
+						<button ng-click="deleteJump(jump)" style="background-color: red" ng-hide="true">DELETE</button>
 					</div>
 				</div>
 			</div>
@@ -50,7 +51,7 @@
 			<div class="col center">
 				<input type="text" ng-model="title" placeholder="Title">
 				<textarea ng-model="description" placeholder="Description"></textarea>
-				<button ng-click="createJump(title, description)" style="margin-top: 20px">CREATE JUMP</button>
+				<button ng-click="createJump(title, description)">CREATE JUMP</button>
 			</div>
 		</div>
 		
@@ -66,6 +67,23 @@
 				width: 20vw;
 				height: 20vh;
 				margin-top: 20px;
+			}
+			
+			body button {
+				margin-top: 20px;
+				margin-right: 10px;
+				font-size: 1.5em;
+				background: none;
+				border: none;
+				font-weight: bold;
+				box-shadow: 0px 0px 1px grey;
+				padding: 10px;
+				outline: none;
+				cursor: pointer;
+			}
+			
+			body button:active {
+				background-color: #F0F0F0;
 			}
 		
 			.row {
@@ -91,7 +109,7 @@
 			}
 		</style>
 		
-		<script src="app.js"></script>
+		<script src="dist/application.js"></script>
 	</body>
 
 </html>
