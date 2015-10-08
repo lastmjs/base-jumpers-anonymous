@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+
+<html>
+
+	<head>
+		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular.min.js"></script>
+	</head>
+
+	<body ng-app="BJA" ng-controller="MainController">
+		
+		<div class="col center">
+			<h1>Welcome to Base Jumpers Anonymous</h1>
+		</div>
+		
+		<div class="col center">
+			<div class="row">
+				<button ng-click="showSignUpArea = true; showListArea = false; showEditArea = false">Sign Up</button>
+				<button ng-click="showSignUpArea = false; showListArea = true; showEditArea = false">View Jumps</button>
+				<button ng-click="showSignUpArea = false; showListArea = false; showEditArea = true">Create Jump</button>
+			</div>
+		</div>
+		
+		<div ng-show="showSignUpArea" ng-controller="SignUpController">
+			<div class="col center">
+				<input class="flex-1" type="text" ng-model="firstName" placeholder="First Name">
+				<input class="flex-1" type="text" ng-model="lastName" placeholder="Last Name">
+				<input type="text" ng-model="username" placeholder="Username">
+				<input class="flex-1" type="text" ng-model="email" placeholder="Email">
+				<button ng-click="signUp(firstName, lastName, username, email)">SIGN UP</button>
+			</div>
+		</div>
+		
+		<div ng-show="showListArea" ng-controller="ViewJumpsController">
+			<div class="col center">
+				<div class="row">
+					<input type="text" ng-model="username" placeholder="username">
+					<button ng-click="showJumps(username)">SHOW JUMPS</div>
+				</div>
+				
+				<div ng-repeat="jump in jumps" style="margin-top: 20px">
+					<div class="col center">
+						<div style="font-weight: bold">{{jump.title}}</div>
+						<div>{{jump.description}}</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<div ng-show="showEditArea" ng-controller="CreateJumpController">
+			<div class="col center">
+				<input type="text" ng-model="title" placeholder="Title">
+				<textarea ng-model="description" placeholder="Description"></textarea>
+				<button ng-click="createJump(title, description)" style="margin-top: 20px">CREATE JUMP</button>
+			</div>
+		</div>
+		
+		<style>
+			body input {
+				width: 20vw;
+				font-size: 1.5em;
+				margin-top: 20px;
+			}
+			
+			body textarea {
+				font-size: 1.5em;
+				width: 20vw;
+				height: 20vh;
+				margin-top: 20px;
+			}
+		
+			.row {
+				display: flex;
+				flex-direction: row;
+			}
+			
+			.col {
+				display: flex;
+				flex-direction: column;
+			}
+			
+			.center {
+				align-items: center;
+			}
+			
+			.flex-1 {
+				flex: 1;
+			}
+			
+			.flex-2 {
+				flex: 2;
+			}
+		</style>
+		
+		<script src="app.js"></script>
+	</body>
+
+</html>
