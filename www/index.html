@@ -51,7 +51,8 @@
 			<div class="col center">
 				<input type="text" ng-model="title" placeholder="Title">
 				<textarea ng-model="description" placeholder="Description"></textarea>
-				<button ng-click="createJump(title, description)">CREATE JUMP</button>
+				<textarea ng-model="username" placeholder="Username"></textarea>
+				<button ng-click="createJump(title, description, username)">CREATE JUMP</button>
 			</div>
 		</div>
 		
@@ -108,6 +109,10 @@
 				flex: 2;
 			}
 		</style>
+		
+		<script src="lib/persistence/lib/persistence.js"></script>
+		<script src="lib/persistence/lib/persistence.store.sql.js"></script>
+		<script src="lib/persistence/lib/persistence.store.websql.js"></script>
 		
 		<script src="dist/application.js"></script>
 	</body>

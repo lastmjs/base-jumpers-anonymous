@@ -1,23 +1,28 @@
 angular.module('BJA', [])
+.run(function() {
+	persistence.store.websql.config(persistence, 'bja', 'the Base Jumpers Anonymous WebSQL database', 5 * 1024 * 1024);
+	persistence.schemaSync();
+})
 .controller('MainController', ['$scope',
 	function($scope) {
 		$scope.showSignUpArea = true;
 	}
 ])
-.controller('SignUpController', ['$scope',
-	function($scope) {
+.controller('SignUpController', ['$scope', 'User',
+	function($scope, User) {
 		
 		$scope.signUp = function(firstName, lastName, username, email) {
 			
-			var user = {
-				firstName: firstName,
-				lastName: lastName,
-				username: username,
-				email: email
-			};
+			var user = new User();
 			
-			alert(firstName + ' ' + lastName + '\n' + username + '\n' + email);
+			user.firstName = firstName;
+			user.lastName = lastName;
+			user.username = username;
+			user.email = email;
 			
+			user.save(function() {
+				alert('Save successful!');
+			});
 		};
 		
 	}
@@ -62,3 +67,25 @@ angular.module('BJA', [])
 		
 	}
 ]);
+angular.module('BJA').factory('User', [
+	function() {
+		
+		var User = persistence.define('User', {
+			firstName: 'TEXT',
+			lastName: 'TEXT',
+			username: 'TEXT',
+			email: 'TEXT'
+		});
+		
+		User.prototype.save = function(callback) {
+			
+			persistence.add(this);
+			persistence.flush(function() {
+				callback && callback();
+			});
+			
+		};
+		
+		return User;
+	}
+])
