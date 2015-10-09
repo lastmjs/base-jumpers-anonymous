@@ -19,4 +19,4 @@ angular.module('BJA').factory('User', [
 		
 		return User;
 	}
-])
+]);

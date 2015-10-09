@@ -23,6 +23,7 @@ angular.module('BJA', [])
 			user.save(function() {
 				alert('User saved!');
 			});
+			
 		};
 		
 	}
@@ -51,18 +52,20 @@ angular.module('BJA', [])
 		
 	}
 ])
-.controller('CreateJumpController', ['$scope',
-	function($scope) {
+.controller('CreateJumpController', ['$scope', 'Jump',
+	function($scope, Jump) {
 		
 		$scope.createJump = function(title, description, username) {
 			
-			var jump = {
-				title: title,
-				description: description,
-				username: username
-			};
+			var jump = new Jump();
 			
-			alert('Title: ' + title + '\n' + 'Description: ' + description);
+			jump.title = title;
+			jump.description = description;
+			jump.username = username;
+			
+			jump.save(function() {
+				alert('Jump saved!');
+			});
 			
 		};
 		

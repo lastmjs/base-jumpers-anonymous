@@ -21,7 +21,7 @@ angular.module('BJA', [])
 			user.email = email;
 			
 			user.save(function() {
-				alert('Save successful!');
+				alert('User saved!');
 			});
 		};
 		
@@ -51,20 +51,44 @@ angular.module('BJA', [])
 		
 	}
 ])
-.controller('CreateJumpController', ['$scope',
-	function($scope) {
+.controller('CreateJumpController', ['$scope', 'Jump',
+	function($scope, Jump) {
 		
-		$scope.createJump = function(title, description) {
+		$scope.createJump = function(title, description, username) {
 			
-			var jump = {
-				title: title,
-				description: description
-			};
+			var jump = new Jump();
 			
-			alert('Title: ' + title + '\n' + 'Description: ' + description);
+			jump.title = title;
+			jump.description = description;
+			jump.username = username;
+			
+			jump.save(function() {
+				alert('Jump saved!');
+			});
 			
 		};
 		
+	}
+]);
+angular.module('BJA').factory('Jump', [
+	function() {
+		
+		var Jump = persistence.define('Jump', {
+			title: 'TEXT',
+			description: 'TEXT',
+			username: 'TEXT'
+		});
+		
+		Jump.prototype.save = function(callback) {
+			
+			persistence.add(this);
+			persistence.flush(function() {
+				callback && callback();
+			});
+			
+		};
+		
+		return Jump;
 	}
 ]);
 angular.module('BJA').factory('User', [
@@ -88,4 +112,4 @@ angular.module('BJA').factory('User', [
 		
 		return User;
 	}
-])
+]);
