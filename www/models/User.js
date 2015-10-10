@@ -9,7 +9,7 @@ angular.module('BJA').factory('User', [
 		});
 		
 		User.prototype.save = function(callback) {
-			
+		
 			persistence.add(this);
 			persistence.flush(function() {
 				callback && callback();

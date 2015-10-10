@@ -17,35 +17,35 @@ angular.module('BJA', [])
 			
 			user.firstName = firstName;
 			user.lastName = lastName;
-			user.username = username;
+			user.username= username;
 			user.email = email;
 			
 			user.save(function() {
 				alert('User saved!');
 			});
+			
 		};
 		
 	}
 ])
-.controller('ViewJumpsController', ['$scope',
-	function($scope) {
+.controller('ViewJumpsController', ['$scope', 'Jump',
+	function($scope, Jump) {
 		
 		$scope.showJumps = function(username) {
 			
-			$scope.jumps = [
-				{
-					title: 'Half Dome',
-					description: 'I hit the side of the rock!'
-				},
-				{
-					title: 'San Francisco',
-					description: 'Lol, my chute almost didn\'t come out'
-				},
-				{
-					title: 'Eiffel Tower',
-					description: 'It was fun'
-				}
-			];
+			Jump.getAllByUsername(username, function(jumps) {
+				$scope.$apply(function() {
+					$scope.jumps = jumps;
+				});
+			});
+			
+		};
+		
+		$scope.deleteJump = function(jump) {
+			
+			jump.executeDelete(function() {
+				$scope.showJumps(jump.username);
+			});
 			
 		};
 		
@@ -76,14 +76,30 @@ angular.module('BJA').factory('Jump', [
 		var Jump = persistence.define('Jump', {
 			title: 'TEXT',
 			description: 'TEXT',
-			username: 'TEXT'
+			username: 'TEXT',
+			deletedAt: 'DATE'
 		});
 		
 		Jump.prototype.save = function(callback) {
-			
+		
 			persistence.add(this);
 			persistence.flush(function() {
 				callback && callback();
+			});
+			
+		};
+		
+		Jump.prototype.executeDelete = function(callback) {
+			
+			this.deletedAt = new Date();
+			this.save(callback);
+			
+		};
+		
+		Jump.getAllByUsername = function(username, callback) {
+			
+			Jump.all().filter('username', '=', username).and(new persistence.PropertyFilter('deletedAt', '=', null)).list(function(jumps) {
+				callback(jumps);
 			});
 			
 		};
@@ -102,7 +118,7 @@ angular.module('BJA').factory('User', [
 		});
 		
 		User.prototype.save = function(callback) {
-			
+		
 			persistence.add(this);
 			persistence.flush(function() {
 				callback && callback();
