@@ -18,7 +18,7 @@ module.exports = function(grunt) {
 				}
 			},
 			watch: {
-				files: ['www/*'],
+				files: ['www/*', 'www/models/*'],
 				tasks: 'ngAnnotate',
 				options: {
 					livereload: true
