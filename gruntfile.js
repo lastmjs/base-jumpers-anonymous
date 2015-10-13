@@ -10,26 +10,33 @@ module.exports = function(grunt) {
 		                'www/dist/application.js': ['www/app.js', 'www/modules/*/*.js', 'www/modules/*/*/*.js', 'www/modules/*/*/*/*.js', 'www/directives/*/*.js', 'www/services/*.js', 'www/models/*.js'],
 	            	},
 				}
-			}/*,
-			nodemon: {
-				dev: {
-					script: './bin/www',
-					nodeArgs: ['--watch'],
+			},
+			reload: {
+				port: 6001,
+				proxy: {
+					host: 'localhost'
+				}
+			},
+			watch: {
+				files: ['www/*'],
+				tasks: 'ngAnnotate',
+				options: {
+					livereload: true
+				}
+			},
+			connect: {
+				all: {
 					options: {
-						ignore: ['public/lib', 'node_modules'],
-						callback: function(nodemon) {
-							nodemon.on('start', function() {
-								grunt.task.run('default');
-							});
-						}
+						port: 9000,
+						hostname: '0.0.0.0'
 					}
 				}
-			},*/
+			}
 		});
 		
 		grunt.loadNpmTasks('grunt-ng-annotate');
-		//grunt.loadNpmTasks('grunt-nodemon');
+		grunt.loadNpmTasks('grunt-contrib-connect');
+		grunt.loadNpmTasks('grunt-contrib-watch');
 		
-		grunt.registerTask('default', ['ngAnnotate']);
-		//grunt.registerTask('default', ['ngAnnotate', 'nodemon']);
+		grunt.registerTask('default', ['ngAnnotate', 'connect', 'watch']);
 };
