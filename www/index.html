@@ -41,7 +41,7 @@
 					<div class="col center">
 						<div style="font-weight: bold; font-size: 2em">{{jump.title}}</div>
 						<div style="font-size: 2em">{{jump.description}}</div>
-						<button ng-click="deleteJump(jump)" style="background-color: red">DELETE</button>
+						<button ng-click="deleteJump(jump)" style="background-color: red" ng-show="false">DELETE</button>
 					</div>
 				</div>
 			</div>
@@ -115,6 +115,8 @@
 		<script src="lib/persistence/lib/persistence.store.websql.js"></script>
 		
 		<script src="dist/application.js"></script>
+		
+		<script src="//localhost:35729/livereload.js"></script>
 	</body>
 
 </html>
